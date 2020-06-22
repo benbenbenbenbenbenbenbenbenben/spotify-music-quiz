@@ -1,0 +1,24 @@
+<main role="main" class="inner cover" id="bg">
+    <!-- Track Content -->
+    <div class="">
+        <div class="">
+        <div class="my-3 py-3">
+            <h1 class="display-5">{{ category_name }}</h1>
+            <p class="lead">Song: <span id="songNum">-</span></p>
+            <!-- Player -->
+            {% include player %}
+            {% block content %}{% endblock %}
+            <!-- END Player -->
+            <div class="container" id="coverImg" onclick="next_song('{{ category_id }}')" class="shadow-sm mx-auto" style="width: 400px; height: 300px; cursor: pointer;">
+                <h2 id="coverText" style="overflow-wrap: break-word; color: white; font: 900 150px cookie, cursive; mix-blend-mode: difference;"><i id="next" class="fa fa-chevron-circle-right grow flash" aria-hidden="true"></i></h2>
+            </div>
+        </div>
+        </div>
+    </div>
+</main>
+<script src="{{ url_for('static', filename='player.js') }}"></script>
+<script src="{{ url_for('static', filename='vibrant.js') }}"></script>
+<script>
+    resize_text()
+    pause()
+</script>

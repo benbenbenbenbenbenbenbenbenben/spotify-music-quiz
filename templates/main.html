@@ -1,0 +1,22 @@
+<main role="main" class="inner cover">
+  <h1 class="cover-heading">{{ app_title }}</h1>
+  <p class="lead">Challenge your friends to see who has the best music knowledge!</p>
+  <!-- Start New Quiz -->
+  <form class="needs-validation" action="/categories">
+    <div class="input-group input-group-lg">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroup-sizing-lg">Quiz Name</span>
+      </div>
+      <input name="name" type="text" class="form-control " aria-label="Quiz Name" aria-describedby="inputGroup-sizing-lg" pattern="[a-zA-Z0-9 ]+" required>
+    </div>
+    <input type="submit" value="Start Quiz" class="btn btn-lg btn-secondary mt-3">
+  </form>
+  {% if data is defined %}
+  <!-- Continue Quiz -->
+  <div class="border-top my-3"></div>
+  <p class="lead">Existing Quiz: 
+    <span class="font-weight-bold">{{ data }}</span>
+  </p>
+  <a id="link" href="/categories" class="btn btn-lg btn-secondary">Continue Quiz</a>
+  {% endif %}
+</main>

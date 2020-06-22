@@ -1,0 +1,117 @@
+<main role="main" class="inner cover">
+        <h1 class="cover-heading mb-4">{{ round }}</h1>              
+            
+            <div class="container">
+                <p id="songNum" class="track"></p>
+                <button data-am-button="small" onclick="mute()"><i id="btn-mute" class="fa fa-volume-off"></i></button>
+                <button data-am-button="large" onclick="play_pause()"><i id="btn-play-pause" class="fa fa-play"></i></button>
+                <button data-am-button="small" onclick="stop()"><i id="btn-stop" class="fa fa-stop"></i></button>
+                <div id="progress-bar"><span id="progress"></span></div>	
+            </div>	
+
+            <p class="lead">
+                <a id="next" href="#" onclick="next_song()" class="btn btn-lg btn-secondary float-center m-4">Next</a>
+            </p>
+        
+            <p id="songDetails">
+            <a href="/play">Play</a>
+            <button data-am-button="small" class="float-left"><i id="btn-devices" class="fa fa-bars"></i></button>		
+            <!-- Device Selector -->
+            <div class="btn-group dropright">
+                <button type="button" onclick="devices()" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false">
+                    <i id="btn-devices" class="fa fa-bars"></i> Listen On
+                </button>
+                <div class="dropdown-menu" id="dropdown-devices" aria-labelledby="dropdownMenuButton"></div>
+            </div>
+
+
+        <script>
+            const playBtn = document.getElementById('btn-play-pause')
+            const nextBtn = document.getElementById("next")
+            const songNum = document.getElementById("songNum")
+            const songDetails = document.getElementById("songDetails")
+            const devicesDropdown = document.getElementById("dropdown-devices")
+
+            //Device
+            let activeDevice = devices()
+
+            // Load First Song
+            let data = {{ json|tojson }}
+            console.log(data)
+            first_song(data)
+
+            async function first_song(data){
+                songDetails.innerHTML = 'Song: ' + data.track.name
+                let response = await fetch("/song/"+data.track.id)
+                let state = await response.json()
+                toggle_play(state)
+            }
+
+            async function next_song(){
+                let response = await fetch("/quiz?next={{ category }}")
+                let data = await response.json()
+                console.log(data)
+                songDetails.innerHTML = 'Song: ' + data.track.name
+                response = await fetch("/song/"+data.track.id)
+                let state = await response.json()
+                toggle_play(state)
+            }
+            async function play_pause(){
+                let response = await fetch('/player/play_pause')
+                let state = await response.json()
+                toggle_play(state)
+            }
+            function toggle_play(state){
+                console.log(state)
+                if (state.state == 'playing'){
+                    playBtn.classList.remove('fa-play')
+                    playBtn.classList.add('fa-pause')
+                } else {
+                    playBtn.classList.remove('fa-pause')
+                    playBtn.classList.add('fa-play')
+                }
+            }
+            async function mute(){
+                let response = await fetch('/play')
+                let state = await response.json()
+                if (state.state == 'playing'){
+                    playBtn.classList.remove('fa-play')
+                    playBtn.classList.add('fa-pause')
+                } else {
+                    playBtn.classList.remove('fa-pause')
+                    playBtn.classList.add('fa-play')
+                }
+            }
+            // List Of Devices Spotify Can Play To
+            async function devices(){
+                let response = await fetch('/devices/list')
+                let devices = await response.json()
+                let items = ''
+                for (device of devices.devices){
+                    if (device.is_active){
+                        items += '<span onclick="transfer_device(\''+device.id.toString()+'\')" class="dropdown-item alert alert-success">'+device.name+'</span>'
+                    } else {
+                        items += '<span onclick="transfer_device(\''+device.id.toString()+'\')" class="dropdown-item alert alert-secondary">'+device.name+'</span>'
+                    }
+                }
+                devicesDropdown.innerHTML = items
+                return devices.devices[0].id
+            }
+            // Transfer Playback To Another Device
+            async function transfer_device(device_id){
+                let response = await fetch('/devices/transfer?device='+device_id)
+            }
+            async function stop(){
+                let response = await fetch('/play')
+                let state = await response.json()
+                if (state.state == 'playing'){
+                    playBtn.classList.remove('fa-play')
+                    playBtn.classList.add('fa-pause')
+                } else {
+                    playBtn.classList.remove('fa-pause')
+                    playBtn.classList.add('fa-play')
+                }
+            }
+          
+        </script>
+</main>

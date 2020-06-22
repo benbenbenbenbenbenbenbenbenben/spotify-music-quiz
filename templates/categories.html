@@ -1,0 +1,17 @@
+<main role="main" class="inner cover">
+    <h1 class="cover-heading">{{ app_title }} Categories</h1>
+    <div class="row mb-2">
+        {% for item in data %}
+            <div class="col-md-6">
+                <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <h3 class="mb-0">{{ item }}</h3>
+                        <a href="/quiz?category={{ item }}" class="stretched-link"></a>
+                    </div>
+                    <div class="col-auto d-none d-lg-block">
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</main> 

@@ -1,0 +1,198 @@
+
+body {
+  background: #4f8ea5;
+  background: -moz-radial-gradient(center, ellipse cover, rgba(79, 142, 165, 1) 0%, rgba(52, 63, 83, 1) 50%, rgba(28, 27, 38, 1) 100%);
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(79, 142, 165, 1) 0%, rgba(52, 63, 83, 1) 50%, rgba(28, 27, 38, 1) 100%);
+  background: radial-gradient(ellipse at center, rgba(79, 142, 165, 1) 0%, rgba(52, 63, 83, 1) 50%, rgba(28, 27, 38, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4f8ea5', endColorstr='#1c1b26',GradientType=1);
+}
+@import url(https://fonts.googleapis.com/css?family=Raleway:100);
+
+body {
+	 font-family: 'Raleway', sans-serif;
+}
+
+.container {
+	 width: 100%;
+}
+/* USER */
+/* Avatar */
+.avatar {
+	vertical-align: middle;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	margin-left: 10px;
+  }
+.avatar:hover {
+	cursor: pointer;
+	border: solid 2px #888;
+}
+.userImage {
+	vertical-align: middle;
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+}
+
+/* Modal */
+.modal-content{
+	background-color: #242d36;
+}
+.close {
+	color: #FFF;
+	opacity: 1;
+}
+
+ p.track {
+	 text-transform: uppercase;
+	 color: #FFF;
+}
+ p.track span {
+	 color: #999;
+}
+ button {
+	 background-color: rgba(255,255,255,0);
+	 border: 1px solid #FFF;
+	 border-radius: 50%;
+	 color: #FFF;
+	 text-align: center;
+	 display: inline-block;
+	 vertical-align: middle;
+	 transition: all 0.2s ease 0;
+}
+ button[data-am-button^="large"] {
+	 width: 60px;
+	 height: 60px;
+	 margin: 0 5px;
+}
+ button[data-am-button^="large"] i {
+	 font-size: 25px;
+}
+ button[data-am-button^="small"] {
+	 width: 40px;
+	 height: 40px;
+}
+ button[data-am-button^="small"] i {
+	 font-size: 14px;
+}
+ button:hover {
+	 color: #999;
+	 border-color: #999;
+}
+ button:focus {
+	 outline: none;
+}
+
+.btn-dark .active {
+	color: green;
+	border-color: green;
+	background-color: green;
+}
+
+a.disabled {
+	pointer-events: none;
+	cursor: default;
+}
+/* Progress Bar */
+.bar {
+	width: 100%;
+	background-color: #000;
+	height: 5px;
+	position: relative;
+	margin: 1em 0;
+}
+.in {
+	animation: fill 20s linear 1;
+	height: 100%;
+	background-color: limegreen;
+}
+.pause {
+	animation-play-state: paused;
+}
+.stop {
+	animation: none;
+}
+@keyframes fill {
+	0% {
+		width: 0%;
+	}
+	100% {
+		width: 100%;
+	}
+}
+/* Volume */
+.dropdown-menu{
+	background-color: #fff0;
+	border: 0;
+}
+
+  .slider:hover {
+	opacity: 1;
+  }
+  
+  .slider {
+	-webkit-appearance: none;
+	width: 80%;
+	height: 3px;
+	border-radius: 5px;  
+	background: #ffffff;
+	outline: none;
+	opacity: 0.7;
+	-webkit-transition: .2s;
+	transition: opacity .2s;
+  }
+  
+  .slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 12px;
+	height: 20px;
+	background: limegreen;
+	cursor: pointer;
+  }
+  
+  .slider::-moz-range-thumb {
+	width: 12px;
+	height: 20px;
+	background: limegreen;
+	cursor: pointer;
+  }
+
+/* Next Button */
+.grow { 
+	transition: all .2s ease-in-out; 
+}
+	
+.grow:hover { 
+	transform: scale(1.1); 
+}
+
+/* Flash Twice */
+.flash {
+    animation: flash linear 3s infinite;
+}
+
+@keyframes flash {
+    0% {
+        transform: scale(1);
+    }
+    5% {
+        transform: scale(1.1);
+    }
+    10% {
+        transform: scale(1);
+	}
+	15% {
+        transform: scale(1);
+	}
+	20% {
+        transform: scale(1.1);
+	}
+	25% {
+        transform: scale(1);
+	}
+	100% {
+        transform: scale(1);
+    }
+}

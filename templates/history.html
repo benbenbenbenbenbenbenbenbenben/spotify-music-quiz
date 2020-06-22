@@ -1,0 +1,36 @@
+<main role="main" class="inner cover">
+  <h1 class="cover-heading">{{ app_title }}</h1>
+  <p class="lead">Previous Quizzes</p>
+  <table class="table table-hover table-dark">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Quiz Name</th>
+        <th scope="col">Categories</th>
+        <th scope="col">Time</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+    <!-- Table Row per Quiz -->
+    {% for item in data %}  
+      <tr>
+        <th scope="row">{{ loop.index }}</th>
+        <td>{{ item['quiz']['name'] }}</td>
+        <td>{{ item['quiz']['categories'] | length }}</td>
+        <td>{{ item['quiz']['timestamp'] | ctime  }}</td>
+        <td><i class="fa fa-trash" aria-hidden="true" onclick="delete_history({{ loop.index }})"></i></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</main>
+<script>
+  async function delete_history(i){
+    //Delete a quiz
+    i--
+    let response = await fetch("/quiz-history/"+i, {method: 'DELETE'})
+    let data = await response
+    location.reload()
+  }
+</script>

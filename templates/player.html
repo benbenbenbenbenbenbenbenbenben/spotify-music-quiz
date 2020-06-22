@@ -1,0 +1,24 @@
+<div class="container w-75">
+    <!-- Device Selector -->
+    <div class="btn-group">
+        <button data-am-button="small" onclick="devices('get')" data-toggle="dropdown" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false">
+            <i id="btn-devices" class="fa fa-desktop"></i>
+        </button>
+        <div class="dropdown-menu" id="dropdown-devices" aria-labelledby="dropdownMenuButton" style="text-shadow: none"></div>
+    </div>
+    <!-- Play -->
+    <button data-am-button="large" onclick="play_pause()"><i id="btn-play-pause" class="fa fa-play"></i></button>
+    <!-- Volume -->
+    <div class="btn-group dropup">
+        <button data-am-button="small" onclick="devices('volume')" id="dropdown-volume" class="dropup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i id="btn-mute" class="fa fa-volume-off"></i>
+        </button>
+        <div class="dropdown-menu slider-dropdown" aria-labelledby="dropdown-volume" style="text-shadow: none">
+            <input type="range" onchange="adjust_volume(this.value)" class="slider" id="volume" min="1" max="100" step="1">
+        </div>
+    </div>
+    <!-- Progress Bar -->
+    <div class="bar">
+        <div id="song_progress" class="in paused stop"></div>
+    </div>
+</div>

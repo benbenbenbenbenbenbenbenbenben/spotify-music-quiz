@@ -1,0 +1,66 @@
+<main role="main" class="inner cover">
+  <h1 class="cover-heading">{{ app_title }}</h1>
+  <p class="lead">Results - {{ data['quiz']['name'] }}</p>
+  <!-- Tracker -->
+  <p>
+    <span id="currentCat">0</span> 
+    /
+    <span id="totalCat">{{ data['quiz']['categories'] | length }}</span> 
+    Categories - 
+    <span id="currentTrack">0</span> 
+    /
+    <span id="totalTrack">0</span> 
+    Tracks
+  </p>
+  <!-- Track Content -->
+  <div class="my-md-3 pl-md-3 media position-relative">
+    <div class="media-body">
+        <a href="#" class="stretched-link" onclick="get_next_song()"></a>
+    </div>
+    <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+      <div class="my-3 py-3">
+        <h1 class="display-5" id="artist">Click To Review</h2>
+        <p class="lead" id="songDetails">Songs</p>
+      </div>
+        <img id="coverImg" class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px;" src="/static/img.jpg">
+    </div>
+  </div>
+  <!-- Quiz Category Buttons -->
+  {% for item in data['quiz']['categories'] %}
+  <button id="buttonCategory{{loop.index}}" class="btn btn-dark" onclick="category({{loop.index}})" type="button" data-toggle="collapse" data-target="#id{{ item['category_name']|replace(' ', '') }}" aria-expanded="true" aria-controls="{{ item['category_name'] }}">
+      {{ item['category_name'] }}
+  </button>
+  {% endfor %}
+  {% for item in data['quiz']['categories'] %}
+  <div class="collapse" id="id{{ item['category_name']|replace(' ', '') }}">
+    <table class="table table-hover table-dark">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Artist</th>
+          <th scope="col">Track</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for track in item['category_tracks'] %} 
+        <tr>
+          <th scope="row">{{ loop.index }}</th>
+          <td>{{ track['track']['artists'][0]['name'] }}</td>
+          <td>{{ track['track']['name'] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endfor %}
+</main>
+<script>
+  // Load Template Data
+  let data = {{ data|tojson }}
+  // Playback Counters
+  let currentCat = document.getElementById('currentCat')
+  let currentTrack = document.getElementById('currentTrack')
+  let currentCatX = 0
+  let currentTrackX = 0
+</script>
+<script src="{{ url_for('static', filename='player.js') }}"></script>

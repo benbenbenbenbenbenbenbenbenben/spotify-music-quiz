@@ -1,0 +1,94 @@
+<main role="main" id="bg" class="inner cover">
+        <!-- Track Content -->
+        <div class="">
+            <div class="">
+            <div class="my-3 py-3">
+                <h1 class="display-5" id="artist">Results - {{ data['quiz']['name'] }}</h1>
+                <p class="lead" id="songDetails">-</p>
+                <!-- Player -->
+                {% include player %}
+                {% block content %}{% endblock %}
+                <!-- END Player -->
+                <div class="container shadow-sm mx-auto" id="coverImg" onclick="get_next_song()" style="width: 400px; height: 300px; cursor: pointer;">
+                    <h2 id="coverText" style="overflow-wrap: break-word; color: white; font: 900 150px cookie, cursive; mix-blend-mode: difference;">Results</h2>
+                </div>
+            </div>
+            </div>
+        </div>
+
+    <!-- Quiz Category Buttons -->
+    {% for item in data['quiz']['categories'] %}
+    <button id="buttonCategory{{loop.index}}" class="btn btn-dark" type="button" class="btn btn-primary" data-toggle="modal" data-target="#id{{ item['category_name']|replace(' ', '') }}">
+        {{ item['category_name'] }}
+    </button>
+    {% endfor %}
+    {% for item in data['quiz']['categories'] %}
+    <!-- Modal Category List -->
+    <div class="modal fade" id="id{{ item['category_name']|replace(' ', '') }}" tabindex="-1" role="dialog" aria-labelledby="{{ item['category_name']|replace(' ', '') }}" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">{{ item['category_name'] }}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover table-dark">
+                    <thead>
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Artist</th>
+                        <th scope="col">Track</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for track in item['category_tracks'] %} 
+                        <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ track['track']['artists'][0]['name'] }}</td>
+                        <td>{{ track['track']['name'] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" onclick="category({{loop.index}})" class="btn btn-primary" data-dismiss="modal">Play</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  {% endfor %}
+    <!-- Tracker -->
+    <p>
+        <span id="currentCat">0</span> 
+        /
+        <span id="totalCat">{{ data['quiz']['categories'] | length }}</span> 
+        Categories - 
+        <span id="currentTrack">0</span> 
+        /
+        <span id="totalTrack">0</span> 
+        Tracks
+    </p>
+    <!-- END Tracker -->
+</main>
+<script>
+  // Load Template Data
+  let data = {{ data|tojson }}
+  // Playback Counters
+  let currentCat = document.getElementById('currentCat')
+  let currentTrack = document.getElementById('currentTrack')
+  let currentCatX = 0
+  let currentTrackX = 0
+</script>
+
+<script src="{{ url_for('static', filename='player.js') }}"></script>
+<script>
+    document.getElementById("coverImg").style.backgroundColor = random_color()
+    resize_text()
+    pause()
+</script>
+
+<script src="{{ url_for('static', filename='vibrant.js') }}"></script>
